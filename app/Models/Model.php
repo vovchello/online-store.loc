@@ -1,8 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Database\Builder;
+use App\Database\Connection;
 use ArrayAccess;
+use Illuminate\Database\Eloquent\JsonEncodingException;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use JsonSerializable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
@@ -10,12 +14,10 @@ use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Database\Eloquent\Concerns;
 
 
-abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, UrlRoutable
+abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, UrlRoutable
 {
     use Concerns\GuardsAttributes,
         Concerns\HasAttributes;
-
-    protected $storage;
 
     protected $table;
 
@@ -134,6 +136,40 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
         $this->table = $table;
 
         return $this;
+    }
+
+    /**
+     * Get the database connection for the model.
+     *
+     * @return Connection
+     */
+    public function getConnection()
+    {
+        return new Connection(config('database'));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function newBaseQueryBuilder()
+    {
+        $connection = $this->getConnection();
+        return new Builder($connection, $connection->getPostProcessor());
+    }
+
+
+    /**
+     * Get a new query builder for the model's table.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQuery()
+    {
+        return $this->newBaseQueryBuilder();
+    }
+
+    public function collectionOnly(array $keys) {
+        return $this->newQuery()->only($keys);
     }
 
     /**

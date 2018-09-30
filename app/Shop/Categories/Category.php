@@ -5,7 +5,7 @@ namespace App\Shop\Categories;
 // use App\Shop\Products\Product;
 
 use App\Exceptions\NotImplementedException;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Model;
 
 class Category extends Model
 {
@@ -20,6 +20,8 @@ class Category extends Model
         'description',
         'cover'
     ];
+
+    protected $table = 'categories';
 
     /**
      * The attributes that should be hidden for arrays.

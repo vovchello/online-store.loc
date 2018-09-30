@@ -2,9 +2,9 @@
 
 namespace App\Shop\Categories\Repositories\Interfaces;
 
-use Jsdecena\Baserepo\BaseRepositoryInterface;
+use App\Interfaces\BaseRepositoryInterface;
 use App\Shop\Categories\Category;
-use App\Shop\Products\Product;
+//use App\Shop\Products\Product;
 use Illuminate\Support\Collection;
 
 interface CategoryRepositoryInterface extends BaseRepositoryInterface
@@ -13,11 +13,11 @@ interface CategoryRepositoryInterface extends BaseRepositoryInterface
 
     public function createCategory(array $params) : Category;
 
-    public function updateCategory(array $params) : Category;
+//    public function updateCategory(array $params) : Category;
 
     public function findCategoryById(int $id) : Category;
 
-    public function deleteCategory() : bool;
+    /*public function deleteCategory() : bool;
 
     public function associateProduct(Product $product);
 
@@ -27,7 +27,7 @@ interface CategoryRepositoryInterface extends BaseRepositoryInterface
 
     public function detachProducts();
 
-    public function deleteFile(array $file, $disk = null) : bool;
+    public function deleteFile(array $file, $disk = null) : bool;*/
 
     public function findCategoryBySlug(array $slug) : Category;
 }

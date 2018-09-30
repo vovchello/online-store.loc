@@ -2,14 +2,14 @@
 
 namespace App\Shop\Categories\Repositories;
 
-use Jsdecena\Baserepo\BaseRepository;
+use App\Repositories\BaseRepository;
 use App\Shop\Categories\Category;
 use App\Shop\Categories\Exceptions\CategoryInvalidArgumentException;
 use App\Shop\Categories\Exceptions\CategoryNotFoundException;
 use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Shop\Products\Product;
-use App\Shop\Products\Transformations\ProductTransformable;
-use App\Shop\Tools\UploadableTrait;
+//use App\Shop\Products\Product;
+//use App\Shop\Products\Transformations\ProductTransformable;
+//use App\Shop\Tools\UploadableTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
-    use UploadableTrait, ProductTransformable;
+    // use UploadableTrait, ProductTransformable;
 
     /**
      * CategoryRepository constructor.
@@ -87,7 +87,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      * @return Category
      * @throws CategoryNotFoundException
      */
-    public function updateCategory(array $params) : Category
+    /*public function updateCategory(array $params) : Category
     {
         $category = $this->findCategoryById($this->model->id);
         $collection = collect($params)->except('_token');
@@ -105,7 +105,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
         $category->update($merge->all());
         return $category;
-    }
+    }*/
 
     /**
      * @param int $id
@@ -127,59 +127,59 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      * @return bool
      * @throws \Exception
      */
-    public function deleteCategory() : bool
-    {
-        return $this->model->delete();
-    }
-
-    /**
-     * Associate a product in a category
-     *
-     * @param Product $product
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function associateProduct(Product $product)
-    {
-        return $this->model->products()->save($product);
-    }
-
-    /**
-     * Return all the products associated with the category
-     *
-     * @return mixed
-     */
-    public function findProducts() : Collection
-    {
-        return $this->model->products;
-    }
-
-    /**
-     * @param array $params
-     */
-    public function syncProducts(array $params)
-    {
-        $this->model->products()->sync($params);
-    }
-
-
-    /**
-     * Detach the association of the product
-     *
-     */
-    public function detachProducts()
-    {
-        $this->model->products()->detach();
-    }
-
-    /**
-     * @param $file
-     * @param null $disk
-     * @return bool
-     */
-    public function deleteFile(array $file, $disk = null) : bool
-    {
-        return $this->update(['cover' => null], $file['category']);
-    }
+//    public function deleteCategory() : bool
+//    {
+//        return $this->model->delete();
+//    }
+//
+//    /**
+//     * Associate a product in a category
+//     *
+//     * @param Product $product
+//     * @return \Illuminate\Database\Eloquent\Model
+//     */
+//    /*public function associateProduct(Product $product)
+//    {
+//        return $this->model->products()->save($product);
+//    }*/
+//
+//    /**
+//     * Return all the products associated with the category
+//     *
+//     * @return mixed
+//     */
+//    public function findProducts() : Collection
+//    {
+//        return $this->model->products;
+//    }
+//
+//    /**
+//     * @param array $params
+//     */
+//    public function syncProducts(array $params)
+//    {
+//        $this->model->products()->sync($params);
+//    }
+//
+//
+//    /**
+//     * Detach the association of the product
+//     *
+//     */
+//    public function detachProducts()
+//    {
+//        $this->model->products()->detach();
+//    }
+//
+//    /**
+//     * @param $file
+//     * @param null $disk
+//     * @return bool
+//     */
+//    public function deleteFile(array $file, $disk = null) : bool
+//    {
+//        return $this->update(['cover' => null], $file['category']);
+//    }
 
     /**
      * Return the category by using the slug as the parameter
