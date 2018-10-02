@@ -32,6 +32,29 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Begin a fluent query against a database collection.
+     *
+     * @param  string $collection
+     * @return Builder
+     */
+    public function collection($collection)
+    {
+        $query = new Builder($this, $this->getPostProcessor());
+        return $query->from($collection);
+    }
+
+    /**
+     * Begin a fluent query against a database collection.
+     *
+     * @param  string $table
+     * @return Builder
+     */
+    public function table($table)
+    {
+        return $this->collection($table);
+    }
+
+    /**
      * Get connection.
      *
      * @param  array $config
@@ -88,6 +111,14 @@ class Connection extends BaseConnection
     public function getDriverName()
     {
         return 'collection';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getDefaultPostProcessor()
+    {
+        return new Query\Processor();
     }
 
     /**

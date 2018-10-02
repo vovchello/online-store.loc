@@ -126,19 +126,6 @@ abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonab
     }
 
     /**
-     * Set the table associated with the model.
-     *
-     * @param  string  $table
-     * @return $this
-     */
-    public function setTable($table)
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-    /**
      * Get the database connection for the model.
      *
      * @return Connection
@@ -163,11 +150,15 @@ abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonab
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function newQuery()
-    {
-        return $this->newBaseQueryBuilder();
-    }
+//    public function newQuery()
+//    {
+//        return $this->newBaseQueryBuilder();
+//    }
 
+    /**
+     * @param array $keys
+     * @return mixed
+     */
     public function collectionOnly(array $keys) {
         return $this->newQuery()->only($keys);
     }

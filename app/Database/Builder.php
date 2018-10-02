@@ -2,10 +2,10 @@
 
 namespace App\Database;
 
+use App\Database\Query\Processor;
 use App\Exceptions\NotImplementedException;
 use Illuminate\Database\Query\Builder as BaseBuilder;
 use Illuminate\Database\Query\Grammars\Grammar;
-use Illuminate\Database\Query\Processors\Processor;
 use Illuminate\Support\Collection;
 
 class Builder extends BaseBuilder
@@ -39,7 +39,7 @@ class Builder extends BaseBuilder
      */
     public function __construct(Connection $connection, Processor $processor)
     {
-        $this->grammar = new Grammar;
+        // $this->grammar = new Grammar;
         $this->connection = $connection;
         $this->databaseName = $connection->getDatabaseName();
         $this->processor = $processor;
@@ -153,6 +153,14 @@ class Builder extends BaseBuilder
         $this->paginating = true;
 
         return $this->skip(($page - 1) * $perPage)->take($perPage);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function where($column, $operator = null, $value = null, $boolean = 'and')
+    {
+        return $this->collection->where($column, $operator, $value, $boolean);
     }
 
     /**
