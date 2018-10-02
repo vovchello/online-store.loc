@@ -84,7 +84,7 @@ class Connection extends BaseConnection
      */
     public function getCollection($name)
     {
-        return $this->db->only($name);
+        return $this->db->only($name)->values();
     }
 
     /**

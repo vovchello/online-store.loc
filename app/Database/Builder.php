@@ -42,6 +42,7 @@ class Builder extends BaseBuilder
         // $this->grammar = new Grammar;
         $this->connection = $connection;
         $this->databaseName = $connection->getDatabaseName();
+        $this->collection = $connection->getCollection($this->databaseName);
         $this->processor = $processor;
     }
 
@@ -90,7 +91,9 @@ class Builder extends BaseBuilder
         //$cursor = $this->collection->find($wheres, $options);
 
 
-        $results = $this->collection->only($columns);
+        $results = empty($columns)
+            ? $this->collection
+            : $this->collection->only($columns);
 
         $skip = $this->offset ?: 0;
         $limit = $this->limit ?: -1;
@@ -107,7 +110,7 @@ class Builder extends BaseBuilder
         }
 
         // Return results
-        return $results->all();
+        return $results;
 
     }
 
@@ -156,11 +159,15 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * @inheritdoc
+     * @param array|\Closure|string $column
+     * @param null $operator
+     * @param null $value
+     * @param string $boolean
+     * @return Collection
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and')
     {
-        return $this->collection->where($column, $operator, $value, $boolean);
+        return $this->collection->where($column, $operator, $value);
     }
 
     /**
@@ -234,7 +241,7 @@ class Builder extends BaseBuilder
     {
         if ($collectionName) {
             $this->collectionName = $collectionName;
-            $this->collection = $this->connection->getCollection($collectionName);
+            $this->collection = collect(...$this->connection->getCollection($collectionName));
         }
 
         return parent::from($collectionName);

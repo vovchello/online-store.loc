@@ -68,7 +68,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function findOneOrFail($id)
     {
-        return $this->model->where('id', $id);
+        return $this->model->findOrFail($id);//where('id', '=', $id)->first();
     }
 
     /**

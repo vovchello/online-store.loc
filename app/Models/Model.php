@@ -146,9 +146,7 @@ abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonab
 
 
     /**
-     * Get a new query builder for the model's table.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
 //    public function newQuery()
 //    {
@@ -156,6 +154,8 @@ abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonab
 //    }
 
     /**
+     * Resolve only methods
+     *
      * @param array $keys
      * @return mixed
      */
