@@ -7,6 +7,7 @@ use App\Database\Connection;
 use ArrayAccess;
 use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Support\Str;
 use JsonSerializable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
@@ -126,6 +127,17 @@ abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonab
     }
 
     /**
+     * Qualify the given column name by the model's table.
+     *
+     * @param  string  $column
+     * @return string
+     */
+    public function qualifyColumn($column)
+    {
+        return $column;
+    }
+
+    /**
      * Get the database connection for the model.
      *
      * @return Connection
@@ -144,14 +156,13 @@ abstract class Model extends BaseModel implements ArrayAccess, Arrayable, Jsonab
         return new Builder($connection, $connection->getPostProcessor());
     }
 
-
     /**
-     * @return Builder
+     * @param string $method
+     * @return mixed
      */
-//    public function newQuery()
-//    {
-//        return $this->newBaseQueryBuilder();
-//    }
+    protected function getRelationshipFromMethod($method) {
+        return $this->$method();
+    }
 
     /**
      * Resolve only methods

@@ -29,8 +29,8 @@ class HomeController extends Controller
 
         $data = config('dummydata');
 
-        $cat1 = $this->categoryRepo->findCategoryById(1);
-        $cat2 = $this->categoryRepo->findCategoryById(2);
+        $cat1 = $this->categoryRepo->findCategoryById(0);
+        $cat2 = $this->categoryRepo->findCategoryById(1);
 
         /*$cat1 = $data['categories'][0];
         $prod1 = $data['products'][0];

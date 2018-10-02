@@ -6,6 +6,8 @@ namespace App\Shop\Categories;
 
 use App\Exceptions\NotImplementedException;
 use App\Models\Model;
+use App\Shop\Products\Product;
+use App\Shop\Products\Repositories\ProductRepository;
 
 class Category extends Model
 {
@@ -30,9 +32,18 @@ class Category extends Model
      */
     protected $hidden = [];
 
+    protected $productsRepo;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->productsRepo = new ProductRepository(new Product());
+
+        parent::__construct($attributes);
+    }
+
     public function products()
     {
-        throw new NotImplementedException();
+        return $this->productsRepo->findProductsByCategoryId($this->getAttribute('id'));
     }
 
     public function parent()

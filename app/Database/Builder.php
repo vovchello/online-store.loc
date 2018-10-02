@@ -167,7 +167,8 @@ class Builder extends BaseBuilder
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and')
     {
-        return $this->collection->where($column, $operator, $value);
+        $this->collection = $this->collection->where($column, $operator, $value);
+        return $this->collection;
     }
 
     /**
