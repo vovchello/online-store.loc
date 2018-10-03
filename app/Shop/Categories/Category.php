@@ -36,14 +36,20 @@ class Category extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->productsRepo = new ProductRepository(new Product());
-
         parent::__construct($attributes);
+    }
+
+    /**
+     * @return ProductRepository
+     */
+    public function getProductRepository() {
+        return $this->productsRepo ?:
+            $this->productsRepo = new ProductRepository(new Product());
     }
 
     public function products()
     {
-        return $this->productsRepo->findProductsByCategoryId($this->getAttribute('id'));
+        return $this->getProductRepository()->findProductsByCategoryId($this->getAttribute('id'));
     }
 
     public function parent()

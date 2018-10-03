@@ -10,6 +10,7 @@ use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 //use App\Shop\Products\Product;
 //use App\Shop\Products\Transformations\ProductTransformable;
 //use App\Shop\Tools\UploadableTrait;
+use App\Shop\Products\Exceptions\ProductNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
@@ -143,16 +144,30 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 //        return $this->model->products()->save($product);
 //    }*/
 //
-//    /**
-//     * Return all the products associated with the category
-//     *
-//     * @return mixed
-//     */
-//    public function findProducts() : Collection
-//    {
-//        return $this->model->products;
-//    }
-//
+    /**
+     * Return all the products associated with the category
+     *
+     * @return mixed
+     */
+    public function findProducts() : Collection
+    {
+        return $this->model->products;
+    }
+
+    /**
+     * @param int $category_id
+     * @return Collection
+     * @throws ProductNotFoundException
+     */
+    public function findProductsByCategoryId(int $category_id) : Collection
+    {
+        try {
+            return $this->findBy(['category_id' => $category_id]);
+        } catch (ModelNotFoundException $e) {
+            throw new ProductNotFoundException($e->getMessage());
+        }
+    }
+
 //    /**
 //     * @param array $params
 //     */

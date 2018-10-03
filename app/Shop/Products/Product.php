@@ -5,7 +5,9 @@ namespace App\Shop\Products;
 use App\Exceptions\NotImplementedException;
 use App\Models\Model;
 use App\Shop\Categories\Category;
+use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\ProductImages\ProductImage;
+use App\Shop\ProductImages\ProductImageRepository;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Support\Collection;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -49,9 +51,37 @@ class Product extends Model implements Buyable
      */
     protected $hidden = [];
 
+    protected $categoryRepo;
+    protected $productImageRepo;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
+
+    /**
+     * @return CategoryRepository
+     */
+    public function getCategoryRepository() {
+        return $this->categoryRepo ?:
+            $this->categoryRepo = new CategoryRepository(new Category());
+    }
+
+    /**
+     * @return ProductImageRepository
+     */
+    public function getProductImageRepository() {
+        return $this->productImageRepo ?:
+            $this->productImageRepo = new ProductImageRepository(new ProductImage());
+    }
+
+    /**
+     * @return Collection
+     * @throws Exceptions\ProductNotFoundException
+     */
     public function categories()
     {
-        throw new NotImplementedException();
+        return $this->getCategoryRepository()->findProductsByCategoryId($this->getAttribute('id'));
     }
 
     /**
@@ -88,11 +118,11 @@ class Product extends Model implements Buyable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return array|Collection
      */
     public function images()
     {
-        throw new NotImplementedException();// $this->hasMany(ProductImage::class);
+        return $this->getProductImageRepository()->findProductImages($this->model->id);// $this->hasMany(ProductImage::class);
     }
 
     /**

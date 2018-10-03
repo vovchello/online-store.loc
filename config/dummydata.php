@@ -32,7 +32,7 @@ return [
             'name'          => 'Product 1',
             'slug'          => 'product-1',
             'description'   => 'Description 1',
-            'cover'         => 'product1.jpg',
+            'cover'         => 'product.png',
             'quantity'      => 1,
             'price'         => 1.5,
             'status'        => 1
@@ -43,7 +43,7 @@ return [
             'name'          => 'Product 2',
             'slug'          => 'product-2',
             'description'   => 'Description 2',
-            'cover'         => 'product1.jpg',
+            'cover'         => 'product.png',
             'quantity'      => 1,
             'price'         => 1.5,
             'status'        => 1

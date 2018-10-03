@@ -5,6 +5,7 @@ namespace App\Shop\ProductImages;
 use App\Exceptions\NotImplementedException;
 use App\Models\Model;
 use App\Shop\Products\Product;
+use App\Shop\Products\Repositories\ProductRepository;
 
 class ProductImage extends Model
 {
@@ -15,12 +16,23 @@ class ProductImage extends Model
 
     public $timestamps = false;
 
+    protected $productImageRepo;
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * ProductImage constructor.
+     */
+    public function __construct()
+    {
+        $this->productImageRepo = new ProductImageRepository($this);
+    }
+
+    /**
+     * @return Product
+     * @throws \App\Shop\Products\Exceptions\ProductNotFoundException
      */
     public function product()
     {
-        throw new NotImplementedException();
+        return $this->productImageRepo->findProduct();
         // return $this->belongsTo(Product::class);
     }
 }
