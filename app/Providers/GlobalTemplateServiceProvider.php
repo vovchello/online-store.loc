@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Shop\Carts\Repositories\CartRepository;
+use App\Shop\Carts\ShoppingCart;
 use App\Shop\Categories\Category;
 use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
@@ -20,7 +22,7 @@ class GlobalTemplateServiceProvider extends ServiceProvider
     {
         view()->composer(['layouts.front.app', 'front.categories.sidebar-category'], function ($view) {
             $view->with('categories', $this->getCategories());
-            // $view->with('cartCount', $this->getCartCount());
+            $view->with('cartCount', $this->getCartCount());
         });
 
         view()->composer(['layouts.front.category-nav'], function ($view) {
@@ -41,11 +43,11 @@ class GlobalTemplateServiceProvider extends ServiceProvider
     /**
      * @return int
      */
-//    private function getCartCount()
-//    {
-//        $cartRepo = new CartRepository(new ShoppingCart);
-//        return $cartRepo->countItems();
-//    }
+    private function getCartCount()
+    {
+        $cartRepo = new CartRepository(new ShoppingCart);
+        return $cartRepo->countItems();
+    }
 
     /**
      * @param Employee $employee

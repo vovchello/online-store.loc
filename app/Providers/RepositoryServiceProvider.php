@@ -57,5 +57,11 @@ class RepositoryServiceProvider extends ServiceProvider
             CategoryRepositoryInterface::class,
             CategoryRepository::class
         );
+
+        $this->app->bind(
+            CartRepositoryInterface::class,
+            CartRepository::class
+        );
+
     }
 }

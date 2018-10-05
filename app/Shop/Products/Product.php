@@ -8,6 +8,7 @@ use App\Shop\Categories\Category;
 use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\ProductImages\ProductImage;
 use App\Shop\ProductImages\ProductImageRepository;
+use App\Shop\Products\Repositories\ProductRepository;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Support\Collection;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -52,6 +53,7 @@ class Product extends Model implements Buyable
     protected $hidden = [];
 
     protected $categoryRepo;
+    protected $productRepo;
     protected $productImageRepo;
 
     public function __construct(array $attributes = [])
@@ -71,6 +73,14 @@ class Product extends Model implements Buyable
     }
 
     /**
+     * @return ProductRepository
+     */
+    public function getProductRepository() {
+        return $this->productRepo ?:
+            $this->productRepo = new ProductRepository($this);
+    }
+
+    /**
      * @return ProductImageRepository
      */
     public function getProductImageRepository() {
@@ -84,7 +94,8 @@ class Product extends Model implements Buyable
      */
     public function categories()
     {
-        return $this->getCategoryRepository()->findProducts();
+        $category_id = $this->getAttribute('category_id');
+        return $this->getCategoryRepository()->findBy('id', $category_id);
     }
 
     /**
