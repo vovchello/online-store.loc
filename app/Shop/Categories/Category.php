@@ -6,6 +6,7 @@ namespace App\Shop\Categories;
 
 use App\Exceptions\NotImplementedException;
 use App\Models\Model;
+use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\Products\Product;
 use App\Shop\Products\Repositories\ProductRepository;
 
@@ -33,6 +34,7 @@ class Category extends Model
     protected $hidden = [];
 
     protected $productsRepo;
+    protected $categoriesRepo;
 
     public function __construct(array $attributes = [])
     {
@@ -47,18 +49,42 @@ class Category extends Model
             $this->productsRepo = new ProductRepository(new Product());
     }
 
-    public function products()
+    /**
+     * @return CategoryRepository
+     */
+    public function getCategoryRepository() {
+        return $this->categoriesRepo ?:
+            $this->categoriesRepo = new CategoryRepository($this);
+    }
+
+    public function products(bool $withChildren = true)
     {
-        return $this->getProductRepository()->findProductsByCategoryId($this->getAttribute('id'));
+        return $this->findProductsWithChildren($this, $withChildren);
     }
 
     public function parent()
     {
-        throw new NotImplementedException();
+        return $this->getCategoryRepository()->find($this->getAttribute('parent_id'));
     }
 
     public function children()
     {
-        throw new NotImplementedException();
+        return $this->getCategoryRepository()->findBy('parent_id', $this->getAttribute('id'));
+    }
+
+    private function findProductsWithChildren(Category $category, bool $withChildren)
+    {
+        $category_id = $category->getAttribute('id');
+        $products = $this->getProductRepository()->findBy('category_id', $category_id);
+
+        if($withChildren) {
+            $childrenCategories = $category->children();
+            foreach ($childrenCategories as $child) {
+                $childs = $this->findProductsWithChildren($child, true);
+                $products = $products->merge($childs);
+            }
+        }
+
+        return $products;
     }
 }

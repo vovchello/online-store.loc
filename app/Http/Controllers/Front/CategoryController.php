@@ -31,11 +31,9 @@ class CategoryController extends Controller
      */
     public function getCategory(string $slug)
     {
-        $category = $this->categoryRepo->findCategoryBySlug(['slug' => $slug]);
+        $category = $this->categoryRepo->findCategoryBySlug($slug);
 
-        $repo = new CategoryRepository($category);
-
-        $products = $repo->findProducts()->where('status', 1)->all();
+        $products = $category->products()->where('status', 1)->all();
 
         return view('front.categories.category', [
             'category' => $category,

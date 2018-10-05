@@ -33,8 +33,6 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 
     public function findProductBySlug(array $slug) : Product;
 
-    public function findProductsByCategoryId(int $category_id) : Collection;
-
     public function searchProduct(string $text) : Collection;
 
     public function findProductImages() : Collection;

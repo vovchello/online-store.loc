@@ -21,13 +21,13 @@ interface CategoryRepositoryInterface extends BaseRepositoryInterface
 
     public function associateProduct(Product $product);
 
-    public function findProducts() : Collection;
-
     public function syncProducts(array $params);
 
     public function detachProducts();
 
     public function deleteFile(array $file, $disk = null) : bool;*/
 
-    public function findCategoryBySlug(array $slug) : Category;
+    public function findProducts() : Collection;
+
+    public function findCategoryBySlug(string $slug) : Category;
 }

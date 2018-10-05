@@ -131,9 +131,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
     /**
-     * Return the categories which the product is associated with
-     *
      * @return Collection
+     * @throws ProductNotFoundException
      */
     public function getCategories() : Collection
     {
@@ -141,9 +140,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
     /**
-     * Sync the categories
-     *
      * @param array $params
+     * @throws ProductNotFoundException
      */
     public function syncCategories(array $params)
     {
@@ -181,23 +179,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         try {
             return $this->findOneByOrFail($slug);
-        } catch (ModelNotFoundException $e) {
-            throw new ProductNotFoundException($e);
-        }
-    }
-
-    /**
-     * Get the products via slug
-     *
-     * @param int $category_id
-     *
-     * @return Collection
-     * @throws ProductNotFoundException
-     */
-    public function findProductsByCategoryId(int $category_id) : Collection
-    {
-        try {
-            return $this->findBy(['category_id' => $category_id]);
         } catch (ModelNotFoundException $e) {
             throw new ProductNotFoundException($e);
         }

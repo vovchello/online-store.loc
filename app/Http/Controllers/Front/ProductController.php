@@ -54,7 +54,7 @@ class ProductController extends Controller
     public function show(string $slug)
     {
         $product = $this->productRepo->findProductBySlug(['slug' => $slug]);
-        $images = $product->images()->get();
+        $images = $product->images();
         $category = $product->categories()->first();
 
         return view('front.products.product', compact(

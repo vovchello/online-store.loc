@@ -145,24 +145,13 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 //    }*/
 //
     /**
-     * Return all the products associated with the category
-     *
-     * @return mixed
-     */
-    public function findProducts() : Collection
-    {
-        return $this->model->products;
-    }
-
-    /**
-     * @param int $category_id
      * @return Collection
      * @throws ProductNotFoundException
      */
-    public function findProductsByCategoryId(int $category_id) : Collection
+    public function findProducts() : Collection
     {
         try {
-            return $this->findBy(['category_id' => $category_id]);
+            return $this->model->products;
         } catch (ModelNotFoundException $e) {
             throw new ProductNotFoundException($e->getMessage());
         }
@@ -199,15 +188,15 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     /**
      * Return the category by using the slug as the parameter
      *
-     * @param array $slug
+     * @param string $slug
      *
      * @return Category
      * @throws CategoryNotFoundException
      */
-    public function findCategoryBySlug(array $slug) : Category
+    public function findCategoryBySlug(string $slug) : Category
     {
         try {
-            return $this->findOneByOrFail($slug);
+            return $this->findOneByOrFail('slug', $slug);
         } catch (ModelNotFoundException $e) {
             throw new CategoryNotFoundException($e);
         }

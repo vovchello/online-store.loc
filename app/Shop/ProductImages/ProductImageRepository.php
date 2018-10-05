@@ -37,7 +37,7 @@ class ProductImageRepository extends BaseRepository
      */
     public function findProductImages(int $product_id) {
         try {
-            return $this->findBy(['product_id' => $product_id]);
+            return $this->findBy('product_id', $product_id);
         } catch (ModelNotFoundException $e) {
             return [];
         }

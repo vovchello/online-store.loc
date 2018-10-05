@@ -9,6 +9,8 @@ use App\Shop\Products\Repositories\ProductRepository;
 
 class ProductImage extends Model
 {
+    protected $table = 'product_images';
+
     protected $fillable = [
         'product_id',
         'src'

@@ -63,8 +63,11 @@ class Product extends Model implements Buyable
      * @return CategoryRepository
      */
     public function getCategoryRepository() {
+        $category_id = $this->getAttribute('category_id');
         return $this->categoryRepo ?:
-            $this->categoryRepo = new CategoryRepository(new Category());
+            $this->categoryRepo = new CategoryRepository(
+                new Category(['id' => $category_id])
+            );
     }
 
     /**
@@ -81,7 +84,7 @@ class Product extends Model implements Buyable
      */
     public function categories()
     {
-        return $this->getCategoryRepository()->findProductsByCategoryId($this->getAttribute('id'));
+        return $this->getCategoryRepository()->findProducts();
     }
 
     /**
@@ -122,7 +125,7 @@ class Product extends Model implements Buyable
      */
     public function images()
     {
-        return $this->getProductImageRepository()->findProductImages($this->model->id);// $this->hasMany(ProductImage::class);
+        return $this->getProductImageRepository()->findProductImages($this->getAttribute('id'));// $this->hasMany(ProductImage::class);
     }
 
     /**

@@ -14,17 +14,17 @@
                     @endif
                 </a>
             </li>
-            {{--@if(isset($images) && !$images->isEmpty())--}}
-                {{--@foreach($images as $image)--}}
-                {{--<li>--}}
-                    {{--<a href="javascript: void(0)">--}}
-                    {{--<img class="img-responsive img-thumbnail"--}}
-                         {{--src="{{ asset("storage/$image->src") }}"--}}
-                         {{--alt="{{ $product->name }}" />--}}
-                    {{--</a>--}}
-                {{--</li>--}}
-                {{--@endforeach--}}
-            {{--@endif--}}
+            @if(isset($images) && !$images->isEmpty())
+                @foreach($images as $image)
+                <li>
+                    <a href="javascript: void(0)">
+                    <img class="img-responsive img-thumbnail"
+                         src="{{ asset("storage/$image->src") }}"
+                         alt="{{ $product->name }}" />
+                    </a>
+                </li>
+                @endforeach
+            @endif
         </ul>
         <figure class="text-center product-cover-wrap col-md-8">
             @if(isset($product->cover))
@@ -39,16 +39,16 @@
     </div>
     <div class="col-md-6">
         <div class="product-description">
-            {{--<h1>{{ $product->name }}--}}
+            <h1>{{ $product->name }}
                 {{--<small>{{ config('cart.currency') }} {{ $product->price }}</small>--}}
-            {{--</h1>--}}
+            </h1>
             <div class="description">{!! $product->description !!}</div>
             <div class="excerpt">
                 <hr>{!!  str_limit($product->description, 100, ' ...') !!}</div>
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    {{--@include('layouts.errors-and-messages')--}}
+                    @include('layouts.errors-and-messages')
                     {{--<form action="{{ route('cart.store') }}" class="form-inline" method="post">--}}
                         {{--{{ csrf_field() }}--}}
                         {{--@if(isset($productAttributes) && !$productAttributes->isEmpty())--}}
