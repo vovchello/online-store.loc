@@ -13,7 +13,4 @@
 
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
-
 });
-Route::get('/category', 'CategoryController@index');
-Route::get('/product', 'ProductController@index');

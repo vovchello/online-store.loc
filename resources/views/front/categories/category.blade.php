@@ -33,9 +33,9 @@
                 </div>
             </div>
             <hr>
-            {{--<div class="row">--}}
-                {{--@include('front.products.product-list', ['products' => $products])--}}
-            {{--</div>--}}
+            <div class="row">
+                @include('front.products.product-list', ['products' => $products])
+            </div>
         </div>
     </div>
 @endsection

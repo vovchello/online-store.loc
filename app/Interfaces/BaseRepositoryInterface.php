@@ -15,11 +15,11 @@ interface BaseRepositoryInterface
 
     public function findOneOrFail($id);
 
-    public function findBy($key, $operator = null, $value = null);
+    public function findBy($key, $value = null);
 
-    public function findOneBy(array $data);
+    public function findOneBy($key, $value = null);
 
-    public function findOneByOrFail(array $data);
+    public function findOneByOrFail($key, $value = null);
 
     public function delete() : bool;
 
