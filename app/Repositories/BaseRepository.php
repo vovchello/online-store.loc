@@ -73,32 +73,32 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * @param array $key
-     * @param null $operator
      * @param null $value
      * @return mixed
      */
-    public function findBy($key, $operator = null, $value = null)
+    public function findBy($key, $value = null)
     {
-        return $this->model->where($key, $value)->get();
+        return $this->model->where($key, '=', $value)->get();
     }
 
     /**
-     * @param array $data
+     * @param $key
+     * @param null $value
      * @return mixed
      */
-    public function findOneBy(array $data)
+    public function findOneBy($key, $value = null)
     {
-        return $this->model->where($data)->first();
+        return $this->model->where($key, '=', $value)->first();
     }
 
     /**
-     * @param array $data
+     * @param $key
+     * @param null $value
      * @return mixed
-     * @throws ModelNotFoundException
      */
-    public function findOneByOrFail(array $data)
+    public function findOneByOrFail($key, $value = null)
     {
-        return $this->model->where($data)->firstOrFail();
+        return $this->model->where($key, '=', $value)->firstOrFail();
     }
 
     /**
