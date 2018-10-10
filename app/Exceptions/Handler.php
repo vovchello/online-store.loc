@@ -3,14 +3,6 @@
 namespace App\Exceptions;
 
 use Exception;
-<<<<<<< HEAD
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
-class Handler extends ExceptionHandler
-{
-    /**
-     * A list of the exception types that are not reported.
-=======
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +16,6 @@ class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that should not be reported.
->>>>>>> lesson10
      *
      * @var array
      */

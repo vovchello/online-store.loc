@@ -9,15 +9,15 @@
                                 <div class="centrize">
                                     <ul class="list-unstyled list-group">
                                         <li>
-                                            {{--<form action="{{ route('cart.store') }}" class="form-inline" method="post">--}}
-                                                {{--{{ csrf_field() }}--}}
-                                                {{--<input type="hidden" name="quantity" value="1" />--}}
-                                                {{--<input type="hidden" name="product" value="{{ $product->id }}">--}}
-                                                {{--<button id="add-to-cart-btn" type="submit" class="btn btn-warning" data-toggle="modal" data-target="#cart-modal"> <i class="fa fa-cart-plus"></i> Add to cart</button>--}}
-                                            {{--</form>--}}
+                                            <form action="{{ route('cart.store') }}" class="form-inline" method="post">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="quantity" value="1" />
+                                                <input type="hidden" name="product" value="{{ $product->id }}">
+                                                <button id="add-to-cart-btn" type="submit" class="btn btn-warning" data-toggle="modal" data-target="#cart-modal"> <i class="fa fa-cart-plus"></i> Add to cart</button>
+                                            </form>
                                         </li>
                                         <li>  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal_{{ $product->id }}"> <i class="fa fa-eye"></i> Quick View</button>
-                                        {{--<li>  <a class="btn btn-default product-btn" href="{{ route('front.get.product', str_slug($product->slug)) }}"> <i class="fa fa-link"></i> Go to product</a> </li>--}}
+                                        <li>  <a class="btn btn-default product-btn" href="{{ route('front.get.product', str_slug($product->slug)) }}"> <i class="fa fa-link"></i> Go to product</a> </li>
                                     </ul>
                                 </div>
                             </div>
@@ -31,8 +31,8 @@
 
                     <div class="product-text">
                         <h4>{{ $product->name }}</h4>
-                        {{--<p>--}}
-                            {{--{{ config('cart.currency') }}--}}
+                        <p>
+                            {{ config('cart.currency') }}
                             {{--@if(!is_null($product->attributes->where('default', 1)->first()))--}}
                                 {{--@if(!is_null($product->attributes->where('default', 1)->first()->sale_price))--}}
                                     {{--{{ number_format($product->attributes->where('default', 1)->first()->sale_price, 2) }}--}}
@@ -41,9 +41,9 @@
                                     {{--{{ number_format($product->attributes->where('default', 1)->first()->price, 2) }}--}}
                                 {{--@endif--}}
                             {{--@else--}}
-                                {{--{{ number_format($product->price, 2) }}--}}
+                                {{ number_format($product->price, 2) }}
                             {{--@endif--}}
-                        {{--</p>--}}
+                        </p>
                     </div>
                     <!-- Modal -->
                     <div class="modal fade" id="myModal_{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

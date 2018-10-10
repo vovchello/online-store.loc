@@ -4,30 +4,33 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+    /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepo;
+
+    /**
+     * HomeController constructor.
+     * @param CategoryRepositoryInterface $categoryRepository
+     */
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepo = $categoryRepository;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
 
-        /*$cat1 = $this->categoryRepo->findCategoryById(0);
-        $cat2 = $this->categoryRepo->findCategoryById(1);*/
+        dd(DB::select('select * from categories'));
 
-        $cat1 = [
-            'id'            => 0,
-            'name'          => 'Category 1',
-            'slug'          => 'category-1',
-            'description'   => 'Category 1 Description',
-        ];
-
-        $cat2 = [
-            'id'            => 1,
-            'name'          => 'Category 2',
-            'slug'          => 'category-2',
-            'description'   => 'Category 2 Description',
-        ];
+        $cat1 = $this->categoryRepo->findCategoryById(1);
+        $cat2 = $this->categoryRepo->findCategoryById(2);
 
         return view('front.index', compact('cat1', 'cat2'));
     }

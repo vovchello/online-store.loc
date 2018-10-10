@@ -14,17 +14,17 @@
                     @endif
                 </a>
             </li>
-            {{--@if(isset($images) && !$images->isEmpty())--}}
-                {{--@foreach($images as $image)--}}
-                {{--<li>--}}
-                    {{--<a href="javascript: void(0)">--}}
-                    {{--<img class="img-responsive img-thumbnail"--}}
-                         {{--src="{{ asset("storage/$image->src") }}"--}}
-                         {{--alt="{{ $product->name }}" />--}}
-                    {{--</a>--}}
-                {{--</li>--}}
-                {{--@endforeach--}}
-            {{--@endif--}}
+            @if(isset($images) && !$images->isEmpty())
+                @foreach($images as $image)
+                <li>
+                    <a href="javascript: void(0)">
+                    <img class="img-responsive img-thumbnail"
+                         src="{{ asset("storage/$image->src") }}"
+                         alt="{{ $product->name }}" />
+                    </a>
+                </li>
+                @endforeach
+            @endif
         </ul>
         <figure class="text-center product-cover-wrap col-md-8">
             @if(isset($product->cover))
@@ -39,47 +39,47 @@
     </div>
     <div class="col-md-6">
         <div class="product-description">
-            {{--<h1>{{ $product->name }}--}}
-                {{--<small>{{ config('cart.currency') }} {{ $product->price }}</small>--}}
-            {{--</h1>--}}
+            <h1>{{ $product->name }}
+                <small>{{ config('cart.currency') }} {{ $product->price }}</small>
+            </h1>
             <div class="description">{!! $product->description !!}</div>
             <div class="excerpt">
                 <hr>{!!  str_limit($product->description, 100, ' ...') !!}</div>
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    {{--@include('layouts.errors-and-messages')--}}
-                    {{--<form action="{{ route('cart.store') }}" class="form-inline" method="post">--}}
-                        {{--{{ csrf_field() }}--}}
-                        {{--@if(isset($productAttributes) && !$productAttributes->isEmpty())--}}
-                            {{--<div class="form-group">--}}
-                                {{--<label for="productAttribute">Choose Combination</label> <br />--}}
-                                {{--<select name="productAttribute" id="productAttribute" class="form-control select2">--}}
-                                    {{--@foreach($productAttributes as $productAttribute)--}}
-                                        {{--<option value="{{ $productAttribute->id }}">--}}
-                                            {{--@foreach($productAttribute->attributesValues as $value)--}}
-                                                {{--{{ $value->attribute->name }} : {{ ucwords($value->value) }}--}}
-                                            {{--@endforeach--}}
-                                            {{--@if(!is_null($productAttribute->price))--}}
-                                                {{--( {{ config('cart.currency_symbol') }} {{ $productAttribute->price }})--}}
-                                            {{--@endif--}}
-                                        {{--</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div><hr>--}}
-                        {{--@endif--}}
-                        {{--<div class="form-group">--}}
-                            {{--<input type="text"--}}
-                                   {{--class="form-control"--}}
-                                   {{--name="quantity"--}}
-                                   {{--id="quantity"--}}
-                                   {{--placeholder="Quantity"--}}
-                                   {{--value="{{ old('quantity') }}" />--}}
-                            {{--<input type="hidden" name="product" value="{{ $product->id }}" />--}}
-                        {{--</div>--}}
-                        {{--<button type="submit" class="btn btn-warning"><i class="fa fa-cart-plus"></i> Add to cart--}}
-                        {{--</button>--}}
-                    {{--</form>--}}
+                    @include('layouts.errors-and-messages')
+                    <form action="{{ route('cart.store') }}" class="form-inline" method="post">
+                        {{ csrf_field() }}
+                        @if(isset($productAttributes) && !$productAttributes->isEmpty())
+                            <div class="form-group">
+                                <label for="productAttribute">Choose Combination</label> <br />
+                                <select name="productAttribute" id="productAttribute" class="form-control select2">
+                                    @foreach($productAttributes as $productAttribute)
+                                        <option value="{{ $productAttribute->id }}">
+                                            @foreach($productAttribute->attributesValues as $value)
+                                                {{ $value->attribute->name }} : {{ ucwords($value->value) }}
+                                            @endforeach
+                                            @if(!is_null($productAttribute->price))
+                                                ( {{ config('cart.currency_symbol') }} {{ $productAttribute->price }})
+                                            @endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div><hr>
+                        @endif
+                        <div class="form-group">
+                            <input type="text"
+                                   class="form-control"
+                                   name="quantity"
+                                   id="quantity"
+                                   placeholder="Quantity"
+                                   value="{{ old('quantity') }}" />
+                            <input type="hidden" name="product" value="{{ $product->id }}" />
+                        </div>
+                        <button type="submit" class="btn btn-warning"><i class="fa fa-cart-plus"></i> Add to cart
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
