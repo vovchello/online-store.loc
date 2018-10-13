@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Shop\Products\Transformations\ProductTransformable;
@@ -36,7 +36,7 @@ class ProductController extends Controller
             $list = $this->productRepo->listProducts();
         }
 
-        $products = $list->where('status', 1)->map(function (Product $item) {
+        $products = $list->where('status', 1)->map(function (Product2 $item) {
             return $this->transformProduct($item);
         });
 

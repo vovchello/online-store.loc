@@ -8,7 +8,7 @@ use App\Shop\Products\Exceptions\ProductUpdateErrorException;
 //use App\Shop\Tools\UploadableTrait;
 use App\Shop\ProductImages\ProductImage;
 use App\Shop\Products\Exceptions\ProductNotFoundException;
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Shop\Products\Transformations\ProductTransformable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,9 +23,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     /**
      * ProductRepository constructor.
-     * @param Product $product
+     * @param Product2 $product
      */
-    public function __construct(Product $product)
+    public function __construct(Product2 $product)
     {
         parent::__construct($product);
         $this->model = $product;
@@ -49,10 +49,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      *
      * @param array $data
      *
-     * @return Product
+     * @return Product2
      * @throws ProductCreateErrorException
      */
-    public function createProduct(array $data) : Product
+    public function createProduct(array $data) : Product2
     {
         try {
             return $this->create($data);
@@ -85,10 +85,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      *
      * @param int $id
      *
-     * @return Product
+     * @return Product2
      * @throws ProductNotFoundException
      */
-    public function findProductById(int $id) : Product
+    public function findProductById(int $id) : Product2
     {
         try {
             return $this->transformProduct($this->findOneOrFail($id));
@@ -100,14 +100,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     /**
      * Delete the product
      *
-     * @param Product $product
+     * @param Product2 $product
      *
      * @return bool
      * @throws \Exception
      * @deprecated
      * @use removeProduct
      */
-    public function deleteProduct(Product $product) : bool
+    public function deleteProduct(Product2 $product) : bool
     {
         $product->images()->delete();
         return $product->delete();
@@ -172,10 +172,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      *
      * @param array $slug
      *
-     * @return Product
+     * @return Product2
      * @throws ProductNotFoundException
      */
-    public function findProductBySlug(array $slug) : Product
+    public function findProductBySlug(array $slug) : Product2
     {
         try {
             return $this->findOneByOrFail($slug);

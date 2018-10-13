@@ -3,7 +3,7 @@
 namespace App\Shop\ProductImages;
 
 use App\Repositories\BaseRepository;
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use App\Shop\Products\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -19,14 +19,14 @@ class ProductImageRepository extends BaseRepository
     {
         parent::__construct($productImage);
         $this->model = $productImage;
-        $this->productsRepo = new ProductRepository(new Product());
+        $this->productsRepo = new ProductRepository(new Product2());
     }
 
     /**
-     * @return Product
+     * @return Product2
      * @throws \App\Shop\Products\Exceptions\ProductNotFoundException
      */
-    public function findProduct() : Product
+    public function findProduct() : Product2
     {
         return $this->productsRepo->findProductById($this->model->product_id);
     }

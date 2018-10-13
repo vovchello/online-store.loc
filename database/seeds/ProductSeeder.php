@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 3,
-            'name'          => 'Product 3',
+            'name'          => 'Product2 3',
             'slug'          => 'product-3',
             'description'   => 'Description 3',
             'quantity'      => 7,
@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 4,
-            'name'          => 'Product 4',
+            'name'          => 'Product2 4',
             'slug'          => 'product-4',
             'description'   => 'Description 4',
             'quantity'      => 1,
@@ -58,7 +58,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 5,
-            'name'          => 'Product 5',
+            'name'          => 'Product2 5',
             'slug'          => 'product-5',
             'description'   => 'Description 4',
             'quantity'      => 12,
@@ -69,7 +69,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 1,
-            'name'          => 'Product 6',
+            'name'          => 'Product2 6',
             'slug'          => 'product-6',
             'description'   => 'Description 6',
             'quantity'      => 18,
@@ -80,7 +80,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 5,
-            'name'          => 'Product 7',
+            'name'          => 'Product2 7',
             'slug'          => 'product-7',
             'description'   => 'Description 7',
             'quantity'      => 14,
@@ -91,7 +91,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 3,
-            'name'          => 'Product 8',
+            'name'          => 'Product2 8',
             'slug'          => 'product-8',
             'description'   => 'Description 8',
             'quantity'      => 1,
@@ -102,7 +102,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 1,
-            'name'          => 'Product 9',
+            'name'          => 'Product2 9',
             'slug'          => 'product-9',
             'description'   => 'Description 9',
             'quantity'      => 2,
@@ -113,7 +113,7 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'category_id'   => 4,
-            'name'          => 'Product 10',
+            'name'          => 'Product2 10',
             'slug'          => 'product-10',
             'description'   => 'Description 10',
             'quantity'      => 5,

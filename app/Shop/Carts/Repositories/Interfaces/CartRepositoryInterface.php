@@ -2,14 +2,14 @@
 
 namespace App\Shop\Carts\Repositories\Interfaces;
 
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use App\Interfaces\BaseRepositoryInterface;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Support\Collection;
 
 interface CartRepositoryInterface extends BaseRepositoryInterface
 {
-    public function addToCart(Product $product, int $int, $options = []) : CartItem;
+    public function addToCart(Product2 $product, int $int, $options = []) : CartItem;
 
     public function getCartItems() : Collection;
 

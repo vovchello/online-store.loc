@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Shop\Carts\Repositories\CartRepository;
 use App\Shop\Carts\ShoppingCart;
-use App\Shop\Categories\Category;
+use App\Shop\Categories\Category2;
 use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
@@ -36,7 +36,7 @@ class GlobalTemplateServiceProvider extends ServiceProvider
      */
     private function getCategories()
     {
-        $categoryRepo = new CategoryRepository(new Category);
+        $categoryRepo = new CategoryRepository(new Category2);
         return $categoryRepo->listCategories('name', 'asc')->where('parent_id', 0);
     }
 

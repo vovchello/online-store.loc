@@ -3,7 +3,7 @@
 namespace App\Shop\Products\Repositories\Interfaces;
 
 use App\Interfaces\BaseRepositoryInterface;
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
@@ -11,13 +11,13 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 {
     public function listProducts(string $order = 'id', string $sort = 'desc', array $columns = ['*']) : Collection;
 
-    public function createProduct(array $data) : Product;
+    public function createProduct(array $data) : Product2;
 
     public function updateProduct(array $data) : bool;
 
-    public function findProductById(int $id) : Product;
+    public function findProductById(int $id) : Product2;
 
-    public function deleteProduct(Product $product) : bool;
+    public function deleteProduct(Product2 $product) : bool;
 
     public function removeProduct() : bool;
 
@@ -31,7 +31,7 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 
     public function deleteThumb(string $src) : bool;
 
-    public function findProductBySlug(array $slug) : Product;
+    public function findProductBySlug(array $slug) : Product2;
 
     public function searchProduct(string $text) : Collection;
 

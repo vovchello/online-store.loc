@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Shop\Carts\Requests\AddToCartRequest;
 use App\Shop\Carts\Repositories\Interfaces\CartRepositoryInterface;
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Shop\Products\Repositories\ProductRepository;
 use App\Shop\Products\Transformations\ProductTransformable;

@@ -2,7 +2,7 @@
 
 namespace App\Shop\Products\Transformations;
 
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use Illuminate\Support\Facades\Storage;
 
 trait ProductTransformable
@@ -10,12 +10,12 @@ trait ProductTransformable
     /**
      * Transform the product
      *
-     * @param Product $product
-     * @return Product
+     * @param Product2 $product
+     * @return Product2
      */
-    protected function transformProduct(Product $product)
+    protected function transformProduct(Product2 $product)
     {
-        $prod = new Product;
+        $prod = new Product2;
         $prod->id = (int) $product->id;
         $prod->name = $product->name;
         $prod->sku = $product->sku;

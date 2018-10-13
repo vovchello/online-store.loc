@@ -6,7 +6,7 @@ use App\Repositories\BaseRepository;
 use App\Shop\Carts\Exceptions\ProductInCartNotFoundException;
 use App\Shop\Carts\Repositories\Interfaces\CartRepositoryInterface;
 use App\Shop\Carts\ShoppingCart;
-use App\Shop\Products\Product;
+use App\Shop\Products\Product2;
 use App\Shop\Products\Repositories\ProductRepository;
 use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
@@ -25,12 +25,12 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     }
 
     /**
-     * @param Product $product
+     * @param Product2 $product
      * @param int $int
      * @param array $options
      * @return CartItem
      */
-    public function addToCart(Product $product, int $int, $options = []) : CartItem
+    public function addToCart(Product2 $product, int $int, $options = []) : CartItem
     {
         return $this->model->add($product, $int, $options);
     }
@@ -53,7 +53,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
         try {
             $this->model->remove($rowId);
         } catch (InvalidRowIDException $e) {
-            throw new ProductInCartNotFoundException('Product in cart not found.');
+            throw new ProductInCartNotFoundException('Product2 in cart not found.');
         }
     }
 
@@ -165,7 +165,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     public function getCartItemsTransformed() : Collection
     {
         return $this->getCartItems()->map(function ($item) {
-            $productRepo = new ProductRepository(new Product());
+            $productRepo = new ProductRepository(new Product2());
             $product = $productRepo->findProductById($item->id);
             $item->product = $product;
             $item->cover = $product->cover;
