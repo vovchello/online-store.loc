@@ -4,35 +4,31 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Shop\Categories\Category;
-use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
     /**
-     * @var CategoryRepositoryInterface
+     * @var Category
      */
-    private $categoryRepo;
+    private $category;
 
     /**
      * HomeController constructor.
-     * @param CategoryRepositoryInterface $categoryRepository
+     *
+     * @param Category $category
      */
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    public function __construct(Category $category)
     {
-        $this->categoryRepo = $categoryRepository;
+        $this->category = $category;
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      */
     public function index() {
-
-        dd(Category::find(1));
-
-        $cat1 = $this->categoryRepo->findCategoryById(1);
-        $cat2 = $this->categoryRepo->findCategoryById(2);
-
-        return view('front.index', compact('cat1', 'cat2'));
+        $categories = $this->category->all();
+var_dump($categories);
+        return view('front.index', ['categories' => $categories]);
     }
 }

@@ -1,4 +1,4 @@
-@if(!empty($products) && !collect($products)->isEmpty())
+@if(!empty($products))
     <ul class="row text-center list-unstyled">
         @foreach($products as $product)
             <li class="col-md-3 col-sm-6 col-xs-12 product-list">
@@ -33,16 +33,7 @@
                         <h4>{{ $product->name }}</h4>
                         <p>
                             {{ config('cart.currency') }}
-                            {{--@if(!is_null($product->attributes->where('default', 1)->first()))--}}
-                                {{--@if(!is_null($product->attributes->where('default', 1)->first()->sale_price))--}}
-                                    {{--{{ number_format($product->attributes->where('default', 1)->first()->sale_price, 2) }}--}}
-                                    {{--<p class="text text-danger">Sale!</p>--}}
-                                {{--@else--}}
-                                    {{--{{ number_format($product->attributes->where('default', 1)->first()->price, 2) }}--}}
-                                {{--@endif--}}
-                            {{--@else--}}
-                                {{ number_format($product->price, 2) }}
-                            {{--@endif--}}
+                            {{ number_format($product->price, 2) }}
                         </p>
                     </div>
                     <!-- Modal -->
@@ -56,13 +47,6 @@
                 </div>
             </li>
         @endforeach
-        {{--@if($products instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator)--}}
-            {{--<div class="row">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<div class="pull-left">{{ $products->links() }}</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--@endif--}}
     </ul>
 @else
     <p class="alert alert-warning">No products yet.</p>
