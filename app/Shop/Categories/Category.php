@@ -2,6 +2,7 @@
 
 namespace App\Shop\Categories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -24,4 +25,15 @@ class Category extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * @param Builder $query
+     * @param string $slug
+     *
+     * @return Builder
+     */
+    public function scopeBySlug(Builder $query, string $slug)
+    {
+        return $query->where('slug', $slug);
+    }
 }

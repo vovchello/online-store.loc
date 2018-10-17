@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index() {
         $categories = $this->category->all();
-var_dump($categories);
+
         return view('front.index', ['categories' => $categories]);
     }
 }

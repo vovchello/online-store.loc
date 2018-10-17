@@ -2,6 +2,7 @@
 
 namespace App\Shop\Products;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -15,11 +16,19 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'cover',
         'quantity',
         'price',
         'status',
-        'sale_price',
-        'slug',
+        'slug'
     ];
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeAvailable(Builder $query)
+    {
+        return $query->where('status', true);
+    }
 }
