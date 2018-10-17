@@ -15,6 +15,18 @@ class Product extends Model
      */
     protected $guarded = ['id'];
 
+
+    /**
+     * name first character uppercase
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return ucfirst($this->name);
+    }
+
+
     /**
      * Gets formated price. From cents to dollars
      *
@@ -72,6 +84,18 @@ class Product extends Model
     public function scopeAvailable($query){
 
         return $this->where('status', 1);
+
+    }
+
+    /**
+     * Find all not available products
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeNotAvailable($query){
+
+        return $this->where('status', 0);
 
     }
 
@@ -148,7 +172,7 @@ class Product extends Model
     }
 
     /**
-     * Find products which price is greater then $price
+     * Find products which price is greater than $price
      *
      * @param $query
      * @param $price
@@ -160,7 +184,7 @@ class Product extends Model
     }
 
     /**
-     * Find products which price is lower then $price
+     * Find products which price is lower than $price
      *
      * @param $query
      * @param $price
@@ -172,7 +196,7 @@ class Product extends Model
     }
 
     /**
-     * Find products which quantity is lower then $quantity
+     * Find products which quantity is lower than $quantity
      *
      * @param $query
      * @param $quantity
@@ -181,6 +205,18 @@ class Product extends Model
     public function scopeFindQuantityLower($query, $quantity){
 
         return $this->where('quantity','<',$quantity);
+    }
+
+    /**
+     * Find products which quantity is greater than $quantity
+     *
+     * @param $query
+     * @param $quantity
+     * @return mixed
+     */
+    public function scopeFindQuantityGreater($query, $quantity){
+
+        return $this->where('quantity','>',$quantity);
     }
 
 
