@@ -2,8 +2,10 @@
 
 namespace App\Shop\Categories;
 
+use App\Shop\Products\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -35,5 +37,23 @@ class Category extends Model
     public function scopeBySlug(Builder $query, string $slug)
     {
         return $query->where('slug', $slug);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function subCategories()
+    {
+        return $this->hasMany(Category::class,'pearent_id');
+    }
+
+    public function scopeParent(Builder $query)
+    {
+        return $query-whereNotNull('pearent_id');
     }
 }
