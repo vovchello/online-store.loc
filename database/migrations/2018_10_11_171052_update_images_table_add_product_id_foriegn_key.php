@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesTable extends Migration
+class UpdateImagesTableAddProductIdForiegnKey extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('product_id');
-            $table->text('src');
-            $table->timestamps();
-        });
+        Schema::table('images',function (Blueprint $table){
+            $table->foreign('product_id')->references('id')->on('products');
+    });
     }
 
     /**
@@ -28,6 +25,8 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::table('images',function (Blueprint $table){
+            $table->dropForeign('images_product_id_foreign');
+        });
     }
 }

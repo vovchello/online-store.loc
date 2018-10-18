@@ -14,7 +14,7 @@ class UpdateCategoryTableForeignPearentId extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->foreign('pearent_id')->references('id')->on('categories');
+            $table->foreign('parent_id')->references('id')->on('categories');
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateCategoryTableForeignPearentId extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign('category_pearent_id_foreign');
+            $table->dropForeign('categories_parent_id_foreign');
         });
     }
 }
