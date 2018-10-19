@@ -28,8 +28,12 @@ class HomeController extends Controller
      */
     public function index() {
 
-        $categories = $this->category->with('products')->get();
+        $categories = $this->category->with(['images', 'subCategories'])->parent()->get();
 
-        return view('front.index', ['categories' => $categories]);
+        $subCategory = $categories[0]->subCategories;
+//        dd($subCategory);
+//        dd($subCategory[0]->images);
+
+            return view('front.index', ['categories' => $categories]);
     }
 }

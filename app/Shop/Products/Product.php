@@ -3,6 +3,7 @@
 namespace App\Shop\Products;
 
 use App\Shop\Categories\Category;
+use App\Shop\Images\Image;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,10 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class,'imageable');
     }
 }

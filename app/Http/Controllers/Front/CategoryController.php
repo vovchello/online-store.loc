@@ -31,17 +31,20 @@ class CategoryController extends Controller
      */
     public function getCategory(string $slug)
     {
-        $categories = $this->category->all();
+        $categories = $this->category->with(['products'])->get();
 
+
+        $parentCategories = $categories->where('parent_id',null);
+
+//       dd($parentCategories);
 
         $category = $categories->where('slug', $slug)->first();
 
-        $products = $category->products()->where('status', 1)->all();
+//        dd($category->images[0]->src);
 
         return view('front.categories.category', [
-            'categories' => $categories,
             'category' => $category,
-            'products' => $products
+            'categories' => $parentCategories
         ]);
     }
 }

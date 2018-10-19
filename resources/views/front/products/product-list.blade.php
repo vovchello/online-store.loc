@@ -22,8 +22,10 @@
                                 </div>
                             </div>
                         </div>
-                        @if(isset($product->cover))
-                            <img src="{{ asset("storage/$product->cover") }}" alt="{{ $product->name }}" class="img-bordered img-responsive">
+                        @if(isset($product->images))
+                            @foreach($product->images as $image)
+                            <img src="{{ $image->src}}" alt="" class="img-bordered img-responsive">
+                            @endforeach
                         @else
                             <img src="https://placehold.it/263x330" alt="{{ $product->name }}" class="img-bordered img-responsive" />
                         @endif

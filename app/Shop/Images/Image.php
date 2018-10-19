@@ -10,4 +10,9 @@ class Image extends Model
         'product_id',
         'src'
     ];
+
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
 }

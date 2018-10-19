@@ -2,6 +2,7 @@
 
 namespace App\Shop\Categories;
 
+use App\Shop\Images\Image;
 use App\Shop\Products\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -47,13 +48,22 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function parentCategory()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
     public function subCategories()
     {
-        return $this->hasMany(Category::class,'pearent_id');
+        return $this->hasMany(Category::class,'parent_id');
     }
 
     public function scopeParent(Builder $query)
     {
-        return $query-whereNotNull('pearent_id');
+        return $query->whereNull('parent_id');
+    }
+
+    public function images(){
+        return $this->morphMany(Image::class,'imageable');
     }
 }

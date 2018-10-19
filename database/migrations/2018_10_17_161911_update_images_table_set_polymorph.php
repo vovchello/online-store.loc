@@ -13,7 +13,10 @@ class UpdateImagesTableSetPolymorph extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('images', function (Blueprint $table){
+           $table->renameColumn('product_id','imageable_id');
+           $table->string('imageable_type');
+        });
     }
 
     /**
@@ -23,6 +26,9 @@ class UpdateImagesTableSetPolymorph extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('images',function(Blueprint $table){
+           $table->renameColumn('imageable_id','product_id');
+           $table->dropColumn('imageable_type');
+        });
     }
 }

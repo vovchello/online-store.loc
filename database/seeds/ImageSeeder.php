@@ -15,63 +15,46 @@ class ImageSeeder extends Seeder
 
         DB::table('images')->insert([
             'product_id'    => 1,
-            'src'          => 'product1.jpg',
+            'src'          => 'toshiba.jpg',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
         DB::table('images')->insert([
             'product_id'    => 2,
-            'src'          => 'product2.jpg',
+            'src'          => 'acer-laptop.jpg',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
         DB::table('images')->insert([
             'product_id'    => 3,
-            'src'          => 'product3.jpg',
+            'src'          => 'samsung -monitor.jpeg',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
         DB::table('images')->insert([
             'product_id'    => 4,
-            'src'          => 'product4.jpg',
+            'src'          => 'ifb-mashine.png',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
         DB::table('images')->insert([
             'product_id'    => 5,
-            'src'          => 'product5.jpg',
+            'src'          => 'hp-printer.png',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
         DB::table('images')->insert([
             'product_id'    => 6,
-            'src'          => 'product6.jpg',
+            'src'          => 'dell-monitor.png',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
         DB::table('images')->insert([
             'product_id'    => 7,
-            'src'          => 'product7.jpg',
+            'src'          => 'bosch-maschine.png',
             'created_at'    => $date,
             'updated_at'    => $date
         ]);
-        DB::table('images')->insert([
-            'product_id'    => 8,
-            'src'          => 'product8.jpg',
-            'created_at'    => $date,
-            'updated_at'    => $date
-        ]);
-        DB::table('images')->insert([
-            'product_id'    => 9,
-            'src'          => 'product9.jpg',
-            'created_at'    => $date,
-            'updated_at'    => $date
-        ]);
-        DB::table('images')->insert([
-            'product_id'    => 10,
-            'src'          => 'product10.jpg',
-            'created_at'    => $date,
-            'updated_at'    => $date
-        ]);
+
     }
 }
