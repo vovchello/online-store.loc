@@ -24,7 +24,7 @@
                         </div>
                         @if(isset($product->images))
                             @foreach($product->images as $image)
-                            <img src="{{ $image->src}}" alt="" class="img-bordered img-responsive">
+                            <img src="{{ asset($image->src)}}" alt="" class="img-bordered img-responsive">
                             @endforeach
                         @else
                             <img src="https://placehold.it/263x330" alt="{{ $product->name }}" class="img-bordered img-responsive" />

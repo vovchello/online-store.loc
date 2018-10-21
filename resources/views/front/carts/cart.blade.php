@@ -1,8 +1,17 @@
 @extends('layouts.front.app')
 
 @section('content')
+
+
+<?php //var_dump($product);?>
+{{--<div class="row">--}}
+    {{--@include('front.products.product-list', ['products' => $products])--}}
+{{--</div>--}}
+{{----}}
+{{--@section('content')--}}
         <div class="container product-in-cart-list">
             @if(!$cartItems->isEmpty())
+            {{--@if($catItems != null)--}}
                 <div class="row">
                     <div class="col-md-12">
                         <ol class="breadcrumb">
@@ -23,79 +32,82 @@
                                 <th class="col-md-2 col-lg-1"></th>
                                 <th class="col-md-2 col-lg-2">Price</th>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <td class="bg-warning">Subtotal</td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning">{{config('cart.currency')}} {{ number_format($subtotal, 2, '.', ',') }}</td>
-                            </tr>
-                            @if(isset($shippingFee) && $shippingFee != 0)
-                            <tr>
-                                <td class="bg-warning">Shipping</td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning">{{config('cart.currency')}} {{ $shippingFee }}</td>
-                            </tr>
-                            @endif
-                            <tr>
-                                <td class="bg-warning">Tax</td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning"></td>
-                                <td class="bg-warning">{{config('cart.currency')}} {{ number_format($tax, 2) }}</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-success">Total</td>
-                                <td class="bg-success"></td>
-                                <td class="bg-success"></td>
-                                <td class="bg-success"></td>
-                                <td class="bg-success">{{config('cart.currency')}} {{ number_format($total, 2, '.', ',') }}</td>
-                            </tr>
-                            </tfoot>
-                            <tbody>
+                            {{--<tfoot>--}}
+                            {{--<tr>--}}
+                                {{--<td class="bg-warning">Subtotal</td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning">{{config('cart.currency')}} {{ number_format($subtotal, 2, '.', ',') }}</td>--}}
+                            {{--</tr>--}}
+                            {{--@if(isset($shippingFee) && $shippingFee != 0)--}}
+                            {{--<tr>--}}
+                                {{--<td class="bg-warning">Shipping</td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning">{{config('cart.currency')}} {{ $shippingFee }}</td>--}}
+                            {{--</tr>--}}
+                            {{--@endif--}}
+                            {{--<tr>--}}
+                                {{--<td class="bg-warning">Tax</td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning"></td>--}}
+                                {{--<td class="bg-warning">{{config('cart.currency')}} {{ number_format($tax, 2) }}</td>--}}
+                            {{--</tr>--}}
+                            {{--<tr>--}}
+                                {{--<td class="bg-success">Total</td>--}}
+                                {{--<td class="bg-success"></td>--}}
+                                {{--<td class="bg-success"></td>--}}
+                                {{--<td class="bg-success"></td>--}}
+                                {{--<td class="bg-success">{{config('cart.currency')}} {{ number_format($total, 2, '.', ',') }}</td>--}}
+                            {{--</tr>--}}
+                            {{--</tfoot>--}}
+                            {{--<tbody>--}}
                             @foreach($cartItems as $cartItem)
                                 <tr>
+
                                     <td>
-                                        <a href="{{ route('front.get.product', [$cartItem->product->slug]) }}" class="hover-border">
-                                            @if(isset($cartItem->cover))
-                                                <img src="{{$cartItem->cover}}" alt="{{ $cartItem->name }}" class="img-responsive img-thumbnail">
+                                        {{--<a href="{{ route('front.get.product', [$cartItem->product->slug]) }}" class="hover-border">--}}
+{{--<!--                            --}}
+                                            @if(isset($cartItem['cover']))
+                                                <img src="{{$cartItem['cover']}}" alt="{{ $cartItem['product']->name }}" class="img-responsive img-thumbnail">
                                             @else
                                                 <img src="https://placehold.it/120x120" alt="" class="img-responsive img-thumbnail">
                                             @endif
                                         </a>
                                     </td>
+
                                     <td>
-                                        <h3>{{ $cartItem->name }}</h3>
-                                        @if(isset($cartItem->options))
+                                        <h3>{{ $cartItem['product']->name }}</h3>
+                                        @if(isset($cartItem['product']->options))
                                             @foreach($cartItem->options as $key => $option)
                                                 <span class="label label-primary">{{ $key }} : {{ $option }}</span>
                                             @endforeach
                                         @endif
                                         <div class="product-description">
-                                            {!! $cartItem->product->description !!}
+                                            {!! $cartItem['product']->description !!}
                                         </div>
                                     </td>
                                     <td>
-                                        <form action="{{ route('cart.update', $cartItem->rowId) }}" class="form-inline" method="post">
+                                        <form action="{{ route('cart.update', $cartItem['product']->id) }}" class="form-inline" method="post">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="put">
                                             <div class="input-group">
-                                                <input type="text" name="quantity" value="{{ $cartItem->qty }}" class="form-control" />
+                                                <input type="text" name="quantity" value="{{ $cartItem['quantity'] }}" class="form-control" />
                                                 <span class="input-group-btn"><button class="btn btn-default">Update</button></span>
                                             </div>
                                         </form>
                                     </td>
                                     <td>
-                                        <form action="{{ route('cart.destroy', $cartItem->rowId) }}" method="post">
+                                        <form action="{{ route('cart.destroy', $cartItem['product']->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="delete">
                                             <button onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fa fa-times"></i></button>
                                         </form>
                                     </td>
-                                    <td>{{config('cart.currency')}} {{ number_format($cartItem->price, 2) }}</td>
+                                    <td>{{config('cart.currency')}} {{ number_format($cartItem['product']->price, 2) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -131,3 +143,5 @@
         }
     </style>
 @endsection
+{{----}}
+    {{--@endsection--}}
