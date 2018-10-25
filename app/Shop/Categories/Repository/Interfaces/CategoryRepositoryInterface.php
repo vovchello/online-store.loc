@@ -6,10 +6,11 @@
  * Time: 22:21
  */
 
-namespace App\Shop\Categories\Repository;
+namespace App\Shop\Categories\Repository\Interfaces;
 
 
-class CaategoryRepositoryInterface
+interface CategoryRepositoryInterface
 {
+
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Shop\Categories\Category;
+use App\Shop\Categories\Repository\CategoryRepository;
 
 class CategoryController extends Controller
 {
@@ -12,14 +13,17 @@ class CategoryController extends Controller
      */
     private $category;
 
+    private $categoryRepo;
+
     /**
      * CategoryController constructor.
      *
      * @param Category $category
      */
-    public function __construct(Category $category)
+    public function __construct(Category $category,CategoryRepository $categoryRepo)
     {
         $this->category = $category;
+        $this->categoryRepo = $categoryRepo;
     }
 
     /**
@@ -31,7 +35,8 @@ class CategoryController extends Controller
      */
     public function getCategory(string $slug)
     {
-        $categories = $this->category->with(['products'])->get();
+
+        $categories = $this->categoryRepo->getAll();
 
 
         $parentCategories = $categories->where('parent_id',null);

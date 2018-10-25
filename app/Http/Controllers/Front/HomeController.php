@@ -30,10 +30,6 @@ class HomeController extends Controller
 
         $categories = $this->category->with(['images', 'subCategories'])->parent()->get();
 
-        $subCategory = $categories[0]->subCategories;
-//        dd($subCategory);
-//        dd($subCategory[0]->images);
-
             return view('front.index', ['categories' => $categories]);
     }
 }

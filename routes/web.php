@@ -12,15 +12,20 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
-
-//    Route::get('cart','CartController@index');
     Route::resource('cart', 'CartController');
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
-    Route::get("{product}", 'ProductController@show')->name('front.get.product');
+    Route::get("product/{product}", 'ProductController@show')->name('front.get.product');
 });
-//Route::get('cart','CartController@index');
 
 
+
+Auth::routes();
+
+Route::namespace('Auth')->group(function (){
+    Route::get("logout", 'LogoutController@index');
+
+});

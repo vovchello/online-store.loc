@@ -23,6 +23,7 @@ class CartController extends Controller
     {
         $this->cartRepo = $cartRepo;
         $this->requiest = $requiest;
+        $this->middleware('auth');
     }
 
     /**
@@ -34,14 +35,9 @@ class CartController extends Controller
     {
         $cartRepo = $this->cartRepo;
 
-//        $this->requiest->session()->pull('cart');
-
-
         $categories = $cartRepo->getCategories();
 
         $cartItems = $this->cartRepo->getProducts();
-
-//        dd($product);
 
         return view('front.carts.cart',[
             'categories' => $categories,
@@ -49,17 +45,6 @@ class CartController extends Controller
 
         ]);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return;
     }
 
     /**
@@ -74,32 +59,8 @@ class CartController extends Controller
 //        dd($request);
         return redirect()->route('cart.index')
         ->with('message', 'Add to cart successful');
-;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-        return;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-        return;
-    }
 
     /**
      * Update the specified resource in storage.
@@ -110,8 +71,12 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        return;
+        $repository = $this->cartRepo;
+
+        $repository->updateQuantity($request,$id);
+
+        return redirect()->route('cart.index')
+        ->with('message', 'cart was updated successfully');
     }
 
     /**
@@ -122,7 +87,8 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
-        return;
+        $this->cartRepo->deleteProduct($id);
+        return redirect()->route('cart.index')
+            ->with('message', 'Remove product from cart successful');
     }
 }

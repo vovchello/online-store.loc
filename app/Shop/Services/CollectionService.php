@@ -11,5 +11,9 @@ namespace App\Shop\Services;
 
 class CollectionService
 {
+    public function getCollection($value)
+    {
+        return collect($value);
+    }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Shop\Products\Product;
+use App\Shop\Products\Repositories\ProductRepository;
 use App\Shop\Products\Transformations\ProductTransformable;
 
 class ProductController extends Controller
@@ -11,17 +12,16 @@ class ProductController extends Controller
     use ProductTransformable;
 
     /**
-     * @var Product
+     * @var ProductRepository
      */
-    private $product;
+    private $productRepo;
 
     /**
      * ProductController constructor.
-     * @param Product $product
+     * @param ProductRepository $productRepo
      */
-    public function __construct(Product $product)
+    public function __construct(ProductRepository $productRepo)
     {
-        $this->product = $product;
+        $this->productRepo = $productRepo;
     }
-
 }

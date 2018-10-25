@@ -7,37 +7,57 @@ use App\Shop\Products\Product;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
-interface ProductRepositoryInterface extends BaseRepositoryInterface
+/**
+ * Interface ProductRepositoryInterface
+ * @package App\Shop\Products\Repositories\Interfaces
+ */
+interface ProductRepositoryInterface
 {
+    /**
+     * @param string $order
+     * @param string $sort
+     * @param array $columns
+     * @return Collection
+     */
     public function listProducts(string $order = 'id', string $sort = 'desc', array $columns = ['*']) : Collection;
 
-    public function createProduct(array $data) : Product;
-
-    public function updateProduct(array $data) : bool;
-
+    /**
+     * @param int $id
+     * @return Product
+     */
     public function findProductById(int $id) : Product;
 
-    public function deleteProduct(Product $product) : bool;
-
-    public function removeProduct() : bool;
-
-    public function detachCategories();
-
+    /**
+     * @return Collection
+     */
     public function getCategories() : Collection;
 
-    public function syncCategories(array $params);
-
-    public function deleteFile(array $file, $disk = null) : bool;
-
-    public function deleteThumb(string $src) : bool;
-
+    /**
+     * @param array $slug
+     * @return Product
+     */
     public function findProductBySlug(array $slug) : Product;
 
+    /**
+     * @param string $text
+     * @return Collection
+     */
     public function searchProduct(string $text) : Collection;
 
+    /**
+     * @return Collection
+     */
     public function findProductImages() : Collection;
 
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
     public function saveCoverImage(UploadedFile $file) : string;
 
+    /**
+     * @param Collection $collection
+     * @return mixed
+     */
     public function saveProductImages(Collection $collection);
 }

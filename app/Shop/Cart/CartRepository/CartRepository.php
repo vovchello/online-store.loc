@@ -10,130 +10,133 @@ namespace App\Shop\Cart\CartRepository;
 
 
 use App\Shop\Categories\Category;
-use App\Shop\Products\Product;
+use App\Shop\Categories\Repository\CategoryRepository;
+use App\Shop\Products\Repositories\ProductRepository;
+use App\Shop\Services\SessionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 /**
  * Class CartRepository
  * @package App\Shop\Cart\CartRepository
  */
-class CartRepository
+class CartRepository implements CartInterface
 {
-    /**
-     * @var Category
-     */
-    private $category;
-
-    /**
-     * @var Product
-     */
-    private $product;
 
     /**
      * @var Request
      */
-    private $requiest;
 
-    private $param;
+    private $productRepo;
+
+    /**
+     * @var
+     */
+    private $categoryRepo;
+
+    /**
+     * @var SessionService
+     */
+    private $session;
+
+    /**
+     * CartRepository constructor.
+     * @param Category $category
+     * @param Request $productRepo
+     * @param $categoryRepo
+     * @param SessionService $session
+     */
+    public function __construct(ProductRepository $productRepo, SessionService $session, CategoryRepository $categoryRepo)
+    {
+        $this->productRepo = $productRepo;
+        $this->categoryRepo = $categoryRepo;
+        $this->session = $session;
+    }
+
 
     /**
      * CartController constructor.
      * @param $categories
      * @param $products
      */
-    public function __construct(Category $category, Product $product,Request $request)
-    {
-        $this->category = $category;
-        $this->product = $product;
-        $this->requiest = $request;
-    }
+
+
 
 
     /**
+     * Returns category collection for navbar
      *
-     */
-    public function getSession()
-    {
-
-    }
-
-    /**
      * @return Category
      */
     public function getCategories()
     {
-        return $this->category->with(['images', 'subCategories'])->parent()->get();
+       return $this->categoryRepo->getParentCategories();
     }
 
+
     /**
+     * Returns collection of products from the session
      *
+     * @return \Illuminate\Support\Collection
      */
-    public function getProducts()
+    public function getProducts() :Collection
     {
-        $requiest = $this->requiest;
+        $productRepo = $this->productRepo;
 
-        $allProducts = $this->product->all();
-
-        $param = $requiest->session()->get('cart')->all();
-
-//        dd($allProducts);
+        $session = $this->session;
 
         $products=collect();
 
-        foreach ($param as $value)
+
+        if (($session->has('cart') )and ( $session->isNotNull('cart')))
         {
-//            dd($value);
-            $prod = $allProducts->where('id', $value['product_id'])->first();
-            $images = $prod->images()->get()->first();
-//            dd($images['src']);
-            $cover = $images['src'];
+            $cart = $session->getAll('cart');
 
-            $product = collect
-            ([
-                'product' => $prod,
-                'quantity' => $value['count'],
-                'cover' => $cover
-            ]);
+            foreach ($cart as $value)
+            {
+                $productCollection = $productRepo->findProductById($value['product_id']);
 
+                $images = $productCollection->images()->get()->first();
 
+                $cover = $images['src'];
 
+                $product = collect
+                ([
+                    'product' => $productCollection,
+                    'quantity' => $value['count'],
+                    'cover' => $cover,
+                ]);
 
+                $products->push($product->all());
+            }
 
-            $products->push($product->all());
+            return $products->sort();
         }
-//        $a = $products[0];
-//        dd($a['product']);
-        return $products;
+
+        return $products->sort();
     }
 
 
-
-    public function destroySession()
-    {
-        $this->requiest->session()->forget('cart');
-    }
 
     /**
+     * Collection of products chosen by user is pushing into the ssession. Also counts products
+     *
      * @param $request
      */
-    public function addToCart($requiest)
+    public function addToCart($requiest) :void
     {
+        $session = $this->session;
 
         $product = $requiest->input('product');
 
-        if(! ($requiest->session()->has('cart')))
+        if(! ($session->has('cart')))
         {
-
             $cartCollection = collect([['product_id'=> $product,'count' => 1]]);
-
-            $requiest->session()->put('cart',$cartCollection);
-
+            $session->put('cart',$cartCollection);
             return;
         }
 
-
-
-        $cartCollection = $this->requiest->session()->get('cart');
+        $cartCollection = $session->getById('cart');
 
         $param = $cartCollection->where('product_id',$product)->first();
 
@@ -141,35 +144,72 @@ class CartRepository
 
         if(!(is_null($param)))
         {
-            $param['count']++;
+            $param['count']=$this->checkQuantaty($param['product_id'],$param['count']++);
             $cartCollection->push(['product_id'=> $product,'count' => $param['count']]);
-            $requiest->session()->put('cart',$cartCollection);
+            $session->put('cart',$cartCollection);
             return;
         }
 
         $cartCollection->push(['product_id'=> $product,'count' => 1]);
 
+        $session->put('cart',$cartCollection);
 
 
-        $requiest->session()->put('cart',$cartCollection);
 
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCartAll()
-    {
-        return $this->requiest->session()->get('cart');
-    }
 
     /**
-     * @param Request $request
+     * Updating the product quantity in the cart
+     *
+     * @param $requiest
      * @param $id
+     */
+    public function updateQuantity($requiest, $id) :void
+    {
+        $cart = $this->session->getById('cart')->where('product_id','<>',$id);
+
+        $quantity = $requiest->input('quantity');
+
+        $cart->push(['product_id'=> $id,'count' => $this->checkQuantaty($id,$quantity)]);
+
+        $this->session->put('cart',$cart);
+
+
+    }
+
+    /**
+     * Delete products from the cart by id
+     *
+     * @param $id
+     */
+    public function deleteProduct($id):void
+    {
+        $cart = $this->session->getById('cart')->where('product_id','<>',$id);
+
+        $this->session->put('cart',$cart);
+
+
+    }
+
+    /**
+     * Check quantity of the product
+     *
+     * @param $id
+     * @param $inputQuantity
      * @return mixed
      */
-    public function getCartById(Request $request, $id)
+    private function checkQuantaty($id, $inputQuantity)
     {
-        return $request->session()->get('cart');
+        $productRepo = $this->productRepo;
+
+        $quantity = $productRepo->findProductById($id)->quantity;
+
+        if($inputQuantity > $quantity)
+        {
+            return $quantity;
+        }
+
+        return $inputQuantity;
     }
 }
